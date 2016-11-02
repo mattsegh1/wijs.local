@@ -4,5 +4,7 @@
 
 {% block body %}
 <h1>Welcome to the Office:index page</h1>
-
+    {% for office in offices %}
+        <li>{{ office.street }}</li>
+    {% endfor %}
 {% endblock %}
