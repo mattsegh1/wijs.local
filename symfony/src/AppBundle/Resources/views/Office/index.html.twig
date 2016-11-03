@@ -3,8 +3,68 @@
 {% block title %}AppBundle:Office:index{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Office:index page</h1>
-    {% for office in offices %}
-        <li>{{ office.street }}</li>
-    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <form class="col s12 card">
+                <div class="card-content">
+                    <span class="card-title">Search offices in the neigborhood.</span>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="location" type="text" class="validate">
+                            <label for="location">Location</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <p>Distance: <span class="range-value">15 km</p>
+                            <p class="range-field">
+                                <input type="range" id="range" min="0" max="100" step="1" value="15" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <input type="checkbox" class="filled-in" id="weekend"/>
+                            <label for="weekend">Open in weekends</label>
+                        </div>
+                        <div class="col s6">
+                            <input type="checkbox" class="filled-in" id="helpdesk" />
+                            <label for="helpdesk">With support desk</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <button class="btn waves-effect waves-light" type="submit" name="submit">
+                        Search for offices <i class="material-icons right">search</i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <ul class="collection with-header">
+                    <li class="collection-header">
+                        <h4>{{ offices|length }} {{ offices|length == 1 ? 'kantoor' : 'kantoren' }} gevonden.</h4>
+                    </li>
+                    {% for office in offices %}
+                        <li class="collection-item">
+                            <p>{{ office.street }}</p>
+                            <p>{{ office.city }}</p>
+                            <p>WKND? {{ office.isOpenInWeekends }}</p>
+                            <p>SPPRT? {{ office.hasSupportDesk }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
