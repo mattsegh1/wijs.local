@@ -5,21 +5,16 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OfficeController extends Controller
 {
+
     /**
-     * @Route("/offices")
+     * @Route("/api/v1/offices")
      */
-    public function updateAction(Request $request)
+    public function searchAction(Request $request)
     {
-        //TEMP
-        $em = $this->getDoctrine()->getManager();
-        $offices = $em->getRepository('AppBundle:Offices')->findAll();
-        dump($offices); // Dump to the Symfony Development Toolbar.
-        //END TEMP
-
-
         //Get querystring parameters.
         $name = $request->get('location');
         $weekend = $request->get('weekend');
@@ -29,29 +24,22 @@ class OfficeController extends Controller
             ->getManager()
             ->getRepository('AppBundle:Offices');
 
-        $query = $repository->createQueryBuilder('o')
+        $weekend = ($weekend == 1 ? 'Y' : 'N');
+        $support = ($support == 1 ? 'Y' : 'N');
+
+        $offices = $repository->createQueryBuilder('o')
             ->select('o.id, o.street, o.city, o.latitude, o.longitude, o.isOpenInWeekends, o.hasSupportDesk')
-            ->where('o.city = :city')
-            ->setParameter('city', $name);
-            //->setParameter('support', $supportdesk)
-            //->setParameter('weekend', $weekend)
+            ->where('o.city = :city AND o.isOpenInWeekends = :weekend AND o.hasSupportDesk = :support')
+            ->setParameter('city', $name)
+            ->setParameter('weekend', $weekend)
+            ->setParameter('support', $support)
+            ->getQuery()
+            ->getResult();
 
-        if($weekend)
-        {
-            $query->andWhere('o.isOpenInWeekends = :weekend')
-                  ->setParameter('weekend', $weekend);
-        }
-        if($support)
-        {
-            $query->andWhere('o.hasSupportDesk = :support')
-                ->setParameter('support', $support);
-        }
-
-        $offices = $query->getQuery()->getResult();
-
-        return $this->render('AppBundle:Office:index.html.twig', array(
-            "offices"=> $offices
-        ));
+        $response = new Response();
+        $response->setContent(json_encode($offices));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }
