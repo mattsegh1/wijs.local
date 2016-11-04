@@ -36,11 +36,12 @@ class OfficeController extends Controller
         $locLatLong = $geoLoc->first();
         $lat = $locLatLong->getLatitude();
         $long = $locLatLong->getLongitude();
+        $curLoc = ["lat"=>$lat,"lng"=>$long];
 
         $classLoader = new \Doctrine\Common\ClassLoader('DoctrineExtensions', '/path/to/extensions');
         $classLoader->register();
 
-        $offices = $repository->createQueryBuilder('o')
+        $result = $repository->createQueryBuilder('o')
             ->select('o.id, o.street, o.city, o.latitude, o.longitude, o.isOpenInWeekends, o.hasSupportDesk')
             ->addSelect('6371 * 2 * ASIN ( SQRT (POWER(SIN((:lat - o.latitude)*pi()/180 / 2),2) + COS(:lat * pi()/180) * COS(o.latitude *pi()/180) * POWER(SIN((:long - o.longitude) *pi()/180 / 2), 2) ) ) as distance')
             ->where('o.isOpenInWeekends = :weekend AND o.hasSupportDesk = :support')
@@ -53,6 +54,9 @@ class OfficeController extends Controller
             ->orderBy('distance')
             ->getQuery()
             ->getResult();
+
+
+        $offices = ["results"=>$result, "curLoc"=>$curLoc];
 
         $response = new Response();
         $response->setContent(json_encode($offices));

@@ -131,12 +131,12 @@
                             + '</li>';
                 });
                 $collection.append(resultItem);
-                officesMap(data);
+                officesMap(data.curLoc, data.results);
             }
 
-            function officesMap(data){
+            function officesMap(curLoc, data){
                 initMap();
-                var myLatLng = {lat: 51.063, lng: 3.733};
+                var myLatLng = curLoc;
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 10,
                     center: myLatLng
@@ -148,10 +148,7 @@
                         map: map,
                         title: 'Hello World!'
                     });
-
-                    console.log(value.longitude);
                 })
-                console.log(data);
             }
 
 
