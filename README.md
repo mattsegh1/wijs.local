@@ -4,7 +4,12 @@ A mini search engine that searches offices.
 
 ## Installation
 
-TODO: Describe the installation process
+1. Install artestead
+2. `artestead make --type symfony`
+3. `composer update`
+4. `vu`
+5. `vss`
+6. `cd composer && composer update`
 
 ## Usage
 
