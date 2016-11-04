@@ -31,7 +31,7 @@ $(document).ready(function () {
                 showOffices(data);
             })
             .fail(function (data) {
-                console.log(data);
+                //console.log(data);
             });
 
         // Prevent form from submitting (cause refresh).
@@ -64,6 +64,7 @@ function showOffices(data) {
             + '</li>';
     });
 
+    $result.prepend('<div id="map" style="width: 100%; height: 400px"></div>');
     $collection.append(resultItem);
     officesMap(data.curLoc, data.results);
 }
