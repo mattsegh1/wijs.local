@@ -25,7 +25,7 @@
                     <span class="card-title">Search offices in the neigborhood.</span>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="location" type="text" class="validate">
+                            <input id="location" type="text" class="validate" required minlength="2">
                             <label for="location">Location</label>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="col s12">
                             <p>Distance: <span id="range-value">15</span> km</p>
                             <p class="range-field">
-                                <input type="range" id="range" min="5" max="100" step="1" value="15"/>
+                                <input type="range" id="range" min="1" max="150" step="1" value="15"/>
                             </p>
                         </div>
                     </div>
