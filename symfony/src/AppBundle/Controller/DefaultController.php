@@ -13,6 +13,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+
         return $this->render('AppBundle:Office:index.html.twig');
     }
 }
