@@ -3,6 +3,20 @@
 {% block title %}Search offices{% endblock %}
 
 {% block body %}
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 50%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
     <div class="container">
         <div class="row">
             <form class="col s12 card">
@@ -42,7 +56,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                MAP HERE
+                <div id="map" style="width: 100%; height: 400px"></div>
             </div>
         </div>
         <div class="row">
@@ -50,22 +64,6 @@
             </div>
         </div>
     </div>
-
-
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-         * element that contains the map. */
-        #map {
-            height: 50%;
-        }
-        /* Optional: Makes the sample page fill the window. */
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-    <div id="map"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -137,6 +135,7 @@
             }
 
             function officesMap(data){
+                initMap();
                 var myLatLng = {lat: 51.063, lng: 3.733};
                 var map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 10,
@@ -177,6 +176,6 @@
             marker.setMap(map);
         }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9n3VRQ1C9GdsiLOHV8svhf9lnvvMAiEQ&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9n3VRQ1C9GdsiLOHV8svhf9lnvvMAiEQ"
             async defer></script>
 {% endblock %}
