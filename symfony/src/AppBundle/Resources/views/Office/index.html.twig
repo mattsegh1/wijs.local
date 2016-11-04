@@ -115,13 +115,13 @@
                 $result.append('<ul class="collection with-header"></ul>');
                 $collection = $('.result .collection');
                 $collection.append('<li class="collection-header">'
-                        + '<h4>' + data.length + (data.length == 1 ? ' office': ' offices')+' found.' + '</h4>'
+                        + '<h4>' + data.results.length + (data.results.length == 1 ? ' office': ' offices')+' found.' + '</h4>'
                         + '</li>');
 
 
                 var resultItem = "";
 
-                $.each(data, function (index, office) {
+                $.each(data.results, function (index, office) {
                     resultItem += '<li class="collection-item avatar">'
                             + '<i class="material-icons circle">work</i>'
                             + '<span class="title">' + office.street + ', ' + office.city + '</span>'
@@ -130,6 +130,7 @@
                             + 'Distance: ' + parseFloat(office.distance).toFixed(2) + ' km.</p>'
                             + '</li>';
                 });
+
                 $collection.append(resultItem);
                 officesMap(data.curLoc, data.results);
             }
