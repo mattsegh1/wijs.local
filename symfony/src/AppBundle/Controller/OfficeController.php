@@ -32,7 +32,7 @@ class OfficeController extends Controller
         $geoLoc = $this->container
             ->get('bazinga_geocoder.geocoder')
             ->using('google_maps')
-            ->geocode("gent");
+            ->geocode($location);
         $locLatLong = $geoLoc->first();
         $lat = $locLatLong->getLatitude();
         $long = $locLatLong->getLongitude();
