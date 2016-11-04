@@ -41,10 +41,31 @@
             </form>
         </div>
         <div class="row">
+            <div class="col s12">
+                MAP HERE
+            </div>
+        </div>
+        <div class="row">
             <div class="col s12 result">
             </div>
         </div>
     </div>
+
+
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+         * element that contains the map. */
+        #map {
+            height: 50%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <div id="map"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -112,7 +133,50 @@
                             + '</li>';
                 });
                 $collection.append(resultItem);
+                officesMap(data);
             }
+
+            function officesMap(data){
+                var myLatLng = {lat: 51.063, lng: 3.733};
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: myLatLng
+                });
+                $.each(data, function(index, value) {
+                    var myLatLng = { lat: value.latitude, lng: value.longitude }
+                    var marker = new google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'Hello World!'
+                    });
+
+                    console.log(value.longitude);
+                })
+                console.log(data);
+            }
+
+
         });
     </script>
+
+    <script>
+        function initMap() {
+            var myLatLng = {lat: -30.363, lng: 131.044};
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: myLatLng
+            });
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!'
+            });
+
+            // To add the marker to the map, call setMap();
+            marker.setMap(map);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9n3VRQ1C9GdsiLOHV8svhf9lnvvMAiEQ&callback=initMap"
+            async defer></script>
 {% endblock %}
