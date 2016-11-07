@@ -27,7 +27,8 @@ framework:
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        #save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   "/home/vagrant/var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -47,6 +48,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        mapping_types:
+            enum: string
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -55,6 +58,28 @@ doctrine:
         #     path:     "%database_path%"
 
     orm:
+        dql:
+            numeric_functions:
+               acos: DoctrineExtensions\Query\Mysql\Acos
+               asin: DoctrineExtensions\Query\Mysql\Asin
+               atan2: DoctrineExtensions\Query\Mysql\Atan2
+               atan: DoctrineExtensions\Query\Mysql\Atan
+               bit_count: DoctrineExtensions\Query\Mysql\BitCount
+               bit_xor: DoctrineExtensions\Query\Mysql\BitXor
+               ceil: DoctrineExtensions\Query\Mysql\Ceil
+               cos: DoctrineExtensions\Query\Mysql\Cos
+               cot: DoctrineExtensions\Query\Mysql\Cot
+               floor: DoctrineExtensions\Query\Mysql\Floor
+               log10: DoctrineExtensions\Query\Mysql\Log10
+               pi: DoctrineExtensions\Query\Mysql\Pi
+               power: DoctrineExtensions\Query\Mysql\Power
+               quarter: DoctrineExtensions\Query\Mysql\Quarter
+               rand: DoctrineExtensions\Query\Mysql\Rand
+               round: DoctrineExtensions\Query\Mysql\Round
+               stddev: DoctrineExtensions\Query\Mysql\StdDev
+               sin: DoctrineExtensions\Query\Mysql\Sin
+               std: DoctrineExtensions\Query\Mysql\Std
+               tan: DoctrineExtensions\Query\Mysql\Tan
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
@@ -66,3 +91,11 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# Bazinga Geocoder Configuration
+bazinga_geocoder:
+    providers:
+        google_maps:
+            locale:               ~
+            region:               ~
+            use_ssl:              false

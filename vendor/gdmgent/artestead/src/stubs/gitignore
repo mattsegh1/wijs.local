@@ -1,9 +1,0 @@
-.idea/
-.vagrant/
-bower_components/
-nbproject/
-node_modules/
-/vendor/
-/.proxy
-/Artestead.yaml
-!bin
